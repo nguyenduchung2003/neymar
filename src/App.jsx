@@ -1,17 +1,20 @@
 import "./App.css"
 import MenuCustom from "./components/MenuCustom"
 import Chat from "./components/Chat"
+import LayoutPDF from "./components/LayoutPDF"
 function App() {
     return (
         <div
-            className="grid grid-rows-1 gap-2"
-            style={{ gridTemplateColumns: "20% 37% 37%" }}
+            className="grid grid-rows-1 gap-2 overflow-x-hidden justify-center  items-center bg-slate-400"
+            style={{ gridTemplateColumns: "20% 39.5% 39.5%" }}
         >
-            <div className=" border border-solid ">
+            <div>
                 <MenuCustom />
             </div>
-            <div className="border border-solid ">2</div>
-            <div className="border border-solid ">
+            <div className="bg-white">
+                <LayoutPDF />
+            </div>
+            <div className="bg-white">
                 <Chat />
             </div>
         </div>

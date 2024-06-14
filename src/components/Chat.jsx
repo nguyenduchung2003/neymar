@@ -1,99 +1,139 @@
-// import {
-//     EditOutlined,
-//     DownloadOutlined,
-//     RedoOutlined,
-//     DeleteOutlined,
-// } from "@ant-design/icons"
-// const Chat = () => {
-//     return (
-//         <>
-//             <div className="flex justify-between items-center px-2">
-//                 <div>Chat</div>
-//                 <div className="flex gap-4">
-//                     <EditOutlined />
-//                     <EditOutlined />
-//                     <DownloadOutlined />
-//                     <RedoOutlined />
-//                     <DeleteOutlined />
-//                 </div>
-//             </div>
-//         </>
-//     )
-// }
-// export default Chat
-// import {  useEffect, useRef, useState } from "react"
-// import TextInput from "./InputChat"
-// import { MessageLeft, MessageRight } from "./Message"
-// import { Box, Button, Paper, Typography } from "@mui/material"
+import { useEffect, useRef, useState } from "react"
+import TextInput from "./InputChat"
+import { MessageLeft, MessageRight } from "./Message"
+import { Box } from "@mui/material"
+import {
+    EditOutlined,
+    DownloadOutlined,
+    RedoOutlined,
+    DeleteOutlined,
+    ExportOutlined,
+} from "@ant-design/icons"
+const dataChat = [
+    {
+        senderId: 1,
+        message: "Hello I am support staff, Can I help you?",
+    },
+    {
+        senderId: 1,
+        message: "Hello I am support staff, Can I help you?",
+    },
+    {
+        senderId: 1,
+        message: "Hello I am support staff, Can I help you?",
+    },
+    {
+        senderId: 1,
+        message: "Hello I am support staff, Can I help you?",
+    },
+    {
+        senderId: 1,
+        message: "Hello I am support staff, Can I help you?",
+    },
+    {
+        senderId: 1,
+        message: "Hello I am support staff, Can I help you?",
+    },
+    {
+        senderId: 1,
+        message: "Hello I am support staff, Can I help you?",
+    },
+    {
+        senderId: 1,
+        message: "Hello I am support staff, Can I help you?",
+    },
+    {
+        senderId: 1,
+        message: "Hello I am support staff, Can I help you?",
+    },
+    {
+        senderId: 2,
+        message: "Yes, I have a problem with my account",
+    },
+    {
+        senderId: 1,
+        message: "What is your problem?",
+    },
+    {
+        senderId: 2,
+        message: "I can't login to my account",
+    },
+    {
+        senderId: 1,
+        message: "Please provide your email address",
+    },
+    {
+        senderId: 2,
+        message: "My email address is",
+    },
+    {
+        senderId: 2,
+        message: "My email address is",
+    },
+]
+export default function Chat() {
+    const [question, setQuestion] = useState("")
+    const messagesEndRef = useRef(null)
 
-// export default function App() {
-//     const [loading, setLoading] = useState(false)
-//     const [question, setQuestion] = useState("")
+    useEffect(() => {
+        const scrollToBottom = () => {
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+        }
+        scrollToBottom()
+    }, [messagesEndRef])
+    useEffect(() => {}, [])
+    // nguoi nhan
+    const userId = 1
 
-//     const messagesEndRef = useRef<null | HTMLDivElement>(null)
+    return (
+        <>
+            <Box
+                className="  flex flex-col items-center  gap-3  justify-between "
+                style={{ height: "calc(100vh - 26px)" }}
+            >
+                <Box className="flex w-full justify-center items-center">
+                    <div className="mt-2 h-[30px] flex justify-between items-center px-2 w-[90%]">
+                        <h2>Chat</h2>
+                        <div className="flex gap-2 text-[20px] text-[#696a6b]">
+                            <ExportOutlined />
+                            <EditOutlined />
+                            <DownloadOutlined />
+                            <RedoOutlined />
+                            <DeleteOutlined />
+                        </div>
+                    </div>
+                </Box>
 
-//     const scrollToBottom = () => {
-//         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-//     }
-//     useEffect(() => {
-//         scrollToBottom()
-//     }, [])
-//     useEffect(() => {}, [])
+                <Box className="flex flex-col items-center relative gap-3 overflow-auto w-[100%]">
+                    {dataChat?.map((item, index) => {
+                        if (item.senderId === userId) {
+                            return (
+                                <MessageRight
+                                    key={index}
+                                    message={item.message}
+                                />
+                            )
+                        } else {
+                            return (
+                                <MessageLeft
+                                    key={index}
+                                    message={item.message}
+                                />
+                            )
+                        }
+                    })}
 
-//     const oldMessages = (e) => {
-//         const { scrollTop, scrollHeight, clientHeight } =
-//             e.target
+                    <div ref={messagesEndRef} />
+                </Box>
+                <TextInput
+                    question={question}
+                    setQuestion={setQuestion}
 
-//     }
-//     return (
-//         <>
-//             <Paper className="w-[400px] h-[80vh] flex flex-col items-center justify-around gap-3">
-//                 <Box className="flex w-full justify-center items-center">
-//                     <Typography className="mt-2">
-//                         Chat with support staff
-//                     </Typography>
-
-//                 </Box>
-
-//                 <Box
-//                     className="w-[400px]  flex flex-col items-center relative gap-3 overflow-auto h-[70vh]"
-//                     onScroll={oldMessages}
-//                 >
-//                     <MessageLeft message="Hello I am support staff, Can I help you?" />
-
-//                     {dataChat?.map((item, index) => {
-//                         if (item.senderId === userId) {
-//                             return (
-//                                 <MessageRight
-//                                     key={index}
-//                                     message={item.message}
-//                                 />
-//                             )
-//                         } else {
-//                             return (
-//                                 <MessageLeft
-//                                     key={index}
-//                                     message={item.message}
-
-//                                     checkAI={false}
-//                                 />
-//                             )
-//                         }
-//                     })}
-//                     {loading ? (
-//                         <MessageLeft loading={loading} checkAI={false} />
-//                     ) : null}
-//                     <div ref={messagesEndRef} />
-//                 </Box>
-//                 <TextInput
-//                     question={question}
-//                     setQuestion={setQuestion}
-//                     setLoading={setLoading}
-//                     dataChat={dataChat}
-//                     setDataChat={setDataChat}
-//                 />
-//             </Paper>
-//         </>
-//         // </div>
-//     )
-// }
+                    // dataChat={dataChat}
+                    // setDataChat={setDataChat}
+                />
+            </Box>
+        </>
+        // </div>
+    )
+}
